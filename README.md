@@ -37,7 +37,8 @@ TechTrove is a full-featured e-commerce web application developed using **Spring
 ---
 
 ## 📁 Project Structure
-
+<details>
+<summary>📁 Project Structure (click to expand)</summary>
 TechTrove/
 ├── src/
 │ ├── main/
@@ -53,7 +54,7 @@ TechTrove/
 │ │ └── application.properties
 ├── pom.xml
 └── README.md
-
+</details>
 
 ---
 
