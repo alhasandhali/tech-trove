@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-1::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Details - TechTrove</title>
+</head>
+<body>
+<section style="margin-top: 65px;" class="container-fluid">
+    <main style="margin-top: 117px;">
+        <div class="content">
+            <div class="container">
+                <div class="container-fluid mt-4">
+                    <!-- Product Details Card -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="row g-0">
+                            <!-- Left Section: Carousel -->
+                            <div class="col-md-6">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img th:src="@{'/images/' + ${user.imageUrl}}" class="d-block w-100 ml-5"
+                                                 alt="User image">
+                                        </div>
+                                        <!-- Add more images if needed -->
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Right Section: Product Info -->
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h2 class="fw-bold text-primary" th:text="${user.fullName}"></h2>
+                                    <p class="text-muted mb-4">E-mail: <span class="fw-bold fst-italic" th:utext="${user.email}"></span></p>
+                                    <p class="text-muted mb-4">Phone: <span class="fw-bold fst-italic" th:utext="${user.phone}"></span></p>
+                                    <p class="text-muted mb-4">Address: <span class="fw-bold fst-italic" th:utext="${user.address}"></span></p>
+                                    <p class="text-muted mb-4">Created: <span class="fw-bold fst-italic" th:utext="${user.createdAt}"></span></p>
+                                    <p class="text-muted mb-4">Last updated: <span class="fw-bold fst-italic" th:utext="${user.updatedAt}"></span></p>
+                                    <p class="text-muted mb-4">Profile Enable: <span class="fw-bold fst-italic" th:utext="${user.enabled}"></span></p>
+                                    <p class="text-muted mb-4">E-mail verified: <span class="fw-bold fst-italic" th:utext="${user.emailVerified}"></span></p>
+                                    <p class="text-muted mb-4">Cart: <span class="fw-bold fst-italic" th:utext="${user.cart.items}"></span></p>
+                                    <p class="text-muted mb-4">Orders: <span class="fw-bold fst-italic" th:utext="${user.orders}"></span></p>
+                                    <p class="text-muted mb-4">Wishlist: <span class="fw-bold fst-italic" th:utext="${user.wishlist.products}"></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="card-footer text-center">
+                            <span>@techtrove</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const quantityInput = document.getElementById("quantity");
+            const cartInput = document.getElementById("cartQuantity");
+            const plusBtn = document.getElementById("plus");
+            const minusBtn = document.getElementById("minus");
+
+            function updateCartInput() {
+                cartInput.value = quantityInput.value;
+            }
+
+            plusBtn.addEventListener("click", function () {
+                let currentVal = parseInt(quantityInput.value) || 1;
+                quantityInput.value = currentVal + 1;
+                updateCartInput();
+            });
+
+            minusBtn.addEventListener("click", function () {
+                let currentVal = parseInt(quantityInput.value) || 1;
+                quantityInput.value = currentVal > 1 ? currentVal - 1 : 1;
+                updateCartInput();
+            });
+
+            quantityInput.addEventListener("input", updateCartInput); // If user types manually
+        });
+    </script>
+
+</section>
+</body>
+</html>

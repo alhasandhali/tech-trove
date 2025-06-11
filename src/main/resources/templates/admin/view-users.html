@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-2::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>All Products - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid mt-4">
+                <!-- Main Content Start -->
+                <!--Wishlist table-->
+                <h2 class="text-center mb-4">👥 Users</h2>
+
+                <div th:if="${!#lists.isEmpty(users)}">
+                    <div class="table-responsive shadow-sm rounded border">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Created</th>
+                                <th>Role</th>
+                                <th>Enable</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}"></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img th:src="@{'/images/' + ${user.imageUrl}}" alt="Product"
+                                             class="img-thumbnail me-2"
+                                             style="width: 60px; height: 60px; object-fit: cover;">
+                                        <a href="#" th:href="@{'/customer/' + ${user.id}}"
+                                           style="color: black; text-decoration: none;"
+                                           onmouseover="this.style.color='blue'; this.style.textDecoration='underline';"
+                                           onmouseout="this.style.color='black'; this.style.textDecoration='none';">
+                                            <span th:text="${user.fullName}"></span>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.phone}"></td>
+                                <td th:text="${user.address}"></td>
+                                <td th:text="${user.createdAt}"></td>
+                                <!-- Start of Role & Enable form -->
+                                <td colspan="3">
+                                    <form th:action="@{'/admin/users/' + ${user.id} + '/update-role-status'}" method="post" class="d-flex gap-2 align-items-center">
+                                        <!-- Role Dropdown -->
+                                        <select name="role" class="form-select form-select-sm">
+                                            <option th:value="ROLE_CUSTOMER" th:selected="${user.role.name() == 'ROLE_CUSTOMER'}">Customer</option>
+                                            <option th:value="ROLE_ADMIN" th:selected="${user.role.name() == 'ROLE_ADMIN'}">Admin</option>
+                                        </select>
+
+                                        <!-- Enable Dropdown -->
+                                        <select name="enabled" class="form-select form-select-sm">
+                                            <option th:value="true" th:selected="${user.enabled}">Enabled</option>
+                                            <option th:value="false" th:selected="${!user.enabled}">Disabled</option>
+                                        </select>
+
+                                        <!-- Submit Button -->
+                                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

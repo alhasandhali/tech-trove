@@ -1,0 +1,208 @@
+.pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.alfa-slab-one-regular {
+    font-family: "Alfa Slab One", serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.truncate {
+    max-width: 250px; /* or whatever fits your design */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.my-bg-color{
+    background: #4fc3f7 !important;
+}
+.my-bg-color-2{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.banner {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../images/bg2.jpg);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Optional: centers content inside the banner */
+}
+.banner-2 {
+    height: auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../images/bg2.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center; /* Optional: centers content inside the banner */
+}
+.my-font-bold{
+    font-weight: bold !important;
+}
+.my-cs{
+    font-weight: lighter;
+    color: rgba(0, 0, 0, .5);
+}
+
+/*Design Side bar*/
+.sidebar{
+    width: 18%;
+    height: 100%;
+    background: white;
+    position: fixed;
+    top: 100px;
+}
+
+.sidebar .cross-btn{
+    position: absolute;
+    top: -35px;
+    right: 0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.sidebar a{
+    display: block;
+    width: 100%;
+    padding: 10px 25px;
+    text-decoration: none;
+    color: gray;
+    font-size: 20px;
+    font-weight: normal;
+    text-transform: capitalize;
+    border-bottom: 1px solid gray;
+    transition: .5s;
+}
+
+.sidebar a:hover{
+    background: #4fc3f7;
+    font-weight: bold;
+    color: black;
+}
+
+.content{
+    margin-left: 20%;
+    background: white;
+}
+
+.content .bar-btn{
+    font-size: 24px;
+    cursor: pointer;
+    margin-top: 7px;
+    margin-left: 5px;
+
+}
+
+.my-contact-img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.my-contact-image{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.my-btn-wc-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #333;
+    transition: .5s;
+}
+
+.my-btn-wc-2:hover{
+    background: #dddddd !important;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #000 !important;
+}
+
+.my-card-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    line-height: 22px;
+    font-family: "Cal Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #d51e0b;
+    letter-spacing: 1px;
+}
+
+#minus, #plus{
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 50%;
+    transition: .5s;
+}
+
+#minus:hover, #plus:hover{
+    color: #d51e0b;
+}
+
+.my-card-name {
+    text-decoration: none;
+    color: #111;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.my-card-name:hover{
+    color: #d51e0b;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.my-btn-wc {
+    padding: 12px 20px;
+    border: 1px solid #D3D3D3;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: .5s;
+}
+
+.my-btn-wc:hover {
+    background: #4fc3f7;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar{
+        display: none;
+        width: 80% !important;
+        height: 100vh;
+        background: white;
+        position: fixed;
+        padding-top: 20px;
+    }
+
+    .content{
+        margin-left: 0;
+    }
+}

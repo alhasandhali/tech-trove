@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-2::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Product - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid mt-4">
+
+                <!-- Message Display -->
+                <div th:if="${message != null}">
+                    <div class="alert mt-3 text-center" th:classappend="' alert-' + ${message.type}">
+                        <span th:text="${message.content}"></span>
+                    </div>
+                </div>
+
+                <!-- Add Product Card -->
+                <div class="card shadow-sm border-0 mb-5">
+                    <div class="card-header text-center bg-light">
+                        <h2 class="text-primary mb-0">Add Product</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <form th:action="@{/admin/process-product}" method="post" th:object="${product}"
+                                  enctype="multipart/form-data">
+                                <div class="row">
+
+                                    <!-- Left Column: Input Fields -->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Product Name</label>
+                                            <input name="name" th:field="*{name}" type="text" class="form-control" id="name"
+                                                   placeholder="Enter product name..." required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="category" class="form-label">Category</label>
+                                            <select name="category" th:field="*{category}" class="form-select" id="category"
+                                                    aria-label="Select product category" required>
+                                                <option selected disabled th:value="${null}">--- Select product category
+                                                    ---
+                                                </option>
+                                                <option th:each="category : ${categories}" th:value="${category}"
+                                                        th:text="${category.name}"></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="brand" class="form-label">Brand</label>
+                                            <select name="brand" th:field="*{brand}" class="form-select" id="brand"
+                                                    aria-label="Select product brand" required>
+                                                <option selected disabled th:value="${null}">--- Select product brand
+                                                    ---
+                                                </option>
+                                                <option th:each="brand : ${brands}" th:value="${brand}"
+                                                        th:text="${brand.name}"></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price (৳)</label>
+                                            <input name="price" th:field="*{price}" type="number" class="form-control" id="price"
+                                                   placeholder="Enter product price..." required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="quantity" class="form-label">Quantity</label>
+                                            <input name="quantity" th:field="*{quantity}" type="number" class="form-control"
+                                                   id="quantity" placeholder="Enter product quantity..." required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right Column: Image and Description -->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="productImage" class="form-label">Product Image</label>
+                                            <input name="productImage" th:field="*{productImage}" type="file" class="form-control"
+                                                   id="productImage" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="mytextarea" class="form-label">Product Description</label>
+                                            <textarea name="description" th:field="*{description}" id="mytextarea" class="form-control"
+                                                      rows="6" placeholder="Enter product details..."
+                                                      style="height: 200px;"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary w-50">Add Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="card-footer text-center">
+                        <span style="color: gray;">@alhasandhali</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiny Cloud for rich text editor -->
+            <script src="https://cdn.tiny.cloud/1/at7ne6x642p9f6v5jo0ap4k6ceos067gitsx1s7qjhds3hp5/tinymce/7/tinymce.min.js"
+                    referrerpolicy="origin"></script>
+            <script>
+                tinymce.init({
+                    selector: '#mytextarea',
+                    height: 300,
+                    menubar: false,
+                    plugins: 'lists link image code',
+                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | code',
+                });
+            </script>
+        </div>
+    </div>
+</section>
+</body>
+</html>

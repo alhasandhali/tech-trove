@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-2::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>All Products - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid mt-4">
+                <!-- Main Content Start -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-light">
+                        <h2 class="text-primary mb-0">All Products</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Products Table Start -->
+                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr class="text-center">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product : ${products}" class="text-center">
+                                    <th scope="row" th:text="${product.id}"></th>
+                                    <td class="text-start">
+                                        <a href="#" th:href="@{'/product/' + ${product.id}}"
+                                           style="color: black; text-decoration: none;"
+                                           onmouseover="this.style.color='blue'; this.style.textDecoration='underline';"
+                                           onmouseout="this.style.color='black'; this.style.textDecoration='none';">
+                                            <span th:text="${product.name}"></span>
+                                        </a>
+                                    </td>
+                                    <td th:text="${product.category}"></td>
+                                    <td th:text="${product.brand}"></td>
+                                    <td th:text="${product.price}"></td>
+                                    <td th:text="${product.quantity}"></td>
+                                    <td class="d-flex justify-content-center">
+                                        <!-- Update Button -->
+                                        <a href="#" th:href="@{'/admin/product/update/' + ${product.id}}"
+                                           class="btn btn-warning btn-sm me-2">
+                                            <i class="fa-solid fa-pen-nib"></i>
+                                        </a>
+                                        <!-- Delete Button -->
+                                        <button class="btn btn-danger btn-sm"
+                                                th:attr="data-bs-target='#deleteModal__' + ${product.id}"
+                                                data-bs-toggle="modal">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+
+                                        <!-- Delete Confirmation Modal (with unique ID) -->
+                                        <div class="modal fade"
+                                             th:id="'deleteModal__' + ${product.id}"
+                                             tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-sm modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body text-center">
+                                                        <i class="fa-solid fa-circle-exclamation text-warning"
+                                                           style="font-size: 100px;"></i>
+                                                        <h3 class="mt-3">Are you sure?</h3>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary me-3"
+                                                                data-bs-dismiss="modal">Close
+                                                        </button>
+                                                        <form th:action="@{'/admin/product/delete/' + ${product.id}}"
+                                                              method="get" class="d-inline">
+                                                            <button type="submit" class="btn btn-danger">Yes</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Products Table End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

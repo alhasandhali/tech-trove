@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{common-3::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <!-- Main Content -->
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-lg-10 p-4">
+                        <h2 class="mb-4">Welcome back, <span th:text="${user.fullName}"></span></h2>
+
+                        <!-- Profile Card -->
+                        <div class="profile-card mb-4">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <img th:src="@{'/images/' + ${user.imageUrl}}" class="rounded-circle img-fluid"
+                                         alt="Profile"/>
+                                </div>
+                                <div class="col-md-9">
+                                    <h5 th:text="${user.fullName}">Jane Doe</h5>
+                                    <p>Email: <span th:text="${user.email}"></span></p>
+                                    <p>Member since: <span th:text="${createdAt}"></span></p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Wishlist table-->
+                        <h2 class="text-center mb-4">💖 Wishlist</h2>
+
+                        <div>
+                            <div class="table-responsive shadow-sm rounded border">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-primary">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
+                                        <th>Price (৳)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item : ${wishlistProducts}">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img th:src="@{'/images/' + ${item.imageUrl}}" alt="Product"
+                                                     class="img-thumbnail me-2"
+                                                     style="width: 60px; height: 60px; object-fit: cover;">
+                                                <a href="#" th:href="@{'/product/' + ${item.id}}"
+                                                   style="color: black; text-decoration: none;"
+                                                   onmouseover="this.style.color='blue'; this.style.textDecoration='underline';"
+                                                   onmouseout="this.style.color='black'; this.style.textDecoration='none';">
+                                                    <span th:text="${item.name}"></span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.category}"></td>
+                                        <td th:text="${item.brand}"></td>
+                                        <td th:text="${item.price}"></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <!--Confirmation Modal-->
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-sm modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-center">
+                                                            <i class="fa-solid fa-circle-exclamation text-warning"
+                                                               style="font-size: 100px;"></i>
+                                                            <h3 class="mt-3">Are you sure?</h3>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary me-3"
+                                                                    data-bs-dismiss="modal">Close
+                                                            </button>
+                                                            <form th:action="@{'/user/wishlist/delete/' + ${item.id}}"
+                                                                  method="get"
+                                                                  class="d-inline">
+                                                                <button type="submit"
+                                                                        class="btn btn-danger"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal">
+                                                                    Yes
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

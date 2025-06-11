@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{common-3::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Details - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow p-4 border-0">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-circle-check fa-3x text-success mb-3"></i>
+                    <h2 class="fw-bold mb-2">Order Details</h2>
+                    <p class="text-muted">
+                        Thank you, <span th:text="${currentUser.fullName}"></span> Your order has
+                        been confirmed.
+                    </p>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="row mt-4">
+                    <!-- Product Details -->
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">Product Summary</h5>
+                        <ul class="list-group list-group-flush" th:if="${orderItem != null}">
+                            <li class="list-group-item" th:each="item : ${orderItem}">
+                                <strong>Product:</strong> <span th:text="${item.product.name}"></span><br/>
+                                <strong>Brand:</strong> <span th:text="${item.product.brand}"></span><br/>
+                                <strong>Quantity:</strong> <span th:text="${item.quantity}"></span><br/>
+                                <strong>Price Each:</strong>
+                                <span th:text="${item.product.price}"></span> ৳<br/>
+                                <strong>Total:</strong>
+                                <span th:text="${totalPrice}"></span> ৳
+                            </li>
+                        </ul>
+                        <p th:if="${orderItem == null || #lists.isEmpty(orderItem)}" class="text-muted">No products found.</p>
+                    </div>
+
+                    <!-- Billing Details -->
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">Billing Address</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Name:</strong> <span th:text="${billingAddress.fullName}"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Phone:</strong> <span th:text="${billingAddress.phone}"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Address:</strong>
+                                <span th:text="${billingAddress.street}"></span>,
+                                <span th:text="${billingAddress.city}"></span>,
+                                <span th:text="${billingAddress.state}"></span>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Zip:</strong> <span th:text="${billingAddress.zipCode}"></span>,
+                                <strong>Country:</strong> <span th:text="${billingAddress.country}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Payment & Status -->
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Payment Method</h6>
+                        <p th:text="${order.payment.method}"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold">Shipping Status</h6>
+                        <p th:text="${order.shippingStatus}"></p>
+                    </div>
+                </div>
+
+                <!-- Footer Action -->
+                <div class="text-center mt-4">
+                    <a href="/user/dashboard" class="btn btn-outline-primary">
+                        <i class="fa-solid fa-box"></i> View My Orders
+                    </a>
+                    <a href="/" class="btn btn-success ms-2">
+                        <i class="fa-solid fa-house"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

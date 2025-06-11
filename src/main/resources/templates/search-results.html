@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-1::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Details - TechTrove</title>
+</head>
+<section style="margin-top: 65px;" class="container-fluid">
+    <main style="margin-top: 117px;">
+        <div class="content">
+            <div class="container">
+                <div class="container-fluid mt-4">
+                    <h3 class="mb-4">Search Results for "<span th:text="${searchQuery}"></span>"</h3>
+
+                    <div class="row" th:if="${products.size() > 0}">
+                        <div class="col-md-4 mb-3" th:each="product : ${products}">
+                            <div class="card shadow-sm border-0 h-100 p-2">
+                                <!-- Carousel for Product Images -->
+                                <div id="carousel-${product.id}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active p-3">
+                                            <a th:href="@{'/product/' + ${product.id}}">
+                                                <img th:src="@{'/images/' + ${product.imageUrl}}" class="d-block w-100"
+                                                     alt="Product image">
+                                            </a>
+                                        </div>
+                                        <!-- Add more <div class="carousel-item"> if needed -->
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carousel-${product.id}"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carousel-${product.id}"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+
+                                <!-- Product Info -->
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title fs-6 my-product-name" style="text-align: justify;">
+                                        <a class="text-decoration-none text-dark fw-bold"
+                                           th:href="@{'/product/' + ${product.id}}">
+                                            <span th:text="${product.name}"></span>
+                                        </a>
+                                    </h5>
+
+                                    <div class="flex-grow-1"></div>
+                                    <!-- Pricing -->
+                                    <p class="fw-semibold text-center mb-3 mt-5" th:text="${product.price} + '৳'"
+                                       style="color: #D51E0B; font-size: 17px;"></p>
+
+                                    <!-- Action Buttons -->
+                                    <div class="mt-auto">
+                                        <a th:href="@{'/product/' + ${product.id}}"
+                                           class="btn btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            <span>Buy Now</span>
+                                        </a>
+                                        <a href="#"
+                                           class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            <span>Add to Cart</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" th:if="${products.size() == 0}">
+                        No products found for "<span th:text="${searchQuery}"></span>".
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+</html>

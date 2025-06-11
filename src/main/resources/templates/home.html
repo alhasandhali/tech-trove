@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{common-1::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home - TechTrove</title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid" style="margin-top: 130px;">
+
+                <!-- Page Title -->
+                <div class="mb-4">
+                    <h2 class="fw-bold text-dark">Discover New Tech</h2>
+                    <p class="text-muted">Latest products curated for you.</p>
+                </div>
+
+                <!--Sorting and Filtering part start-->
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-wrap gap-3 mb-4">
+
+                            <!-- Category Filter -->
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown">
+                                    Category
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/filter/category/LAPTOP">Laptop</a></li>
+                                    <li><a class="dropdown-item" href="/filter/category/MOBILE">Mobile</a></li>
+                                    <li><a class="dropdown-item" href="/filter/category/CAMERA">Camera</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Brand Filter -->
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown">
+                                    Brand
+                                </button>
+                                <ul class="dropdown-menu"  style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Laptop Brands -->
+                                    <li><a class="dropdown-item" href="/filter/brand/DELL">Dell</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/HP">HP</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/LENOVO">Lenovo</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/ASUS">Asus</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/ACER">Acer</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/APPLE">Apple</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/MICROSOFT">Microsoft</a></li>
+
+                                    <!-- Mobile/Phone Brands -->
+                                    <li><a class="dropdown-item" href="/filter/brand/SAMSUNG">Samsung</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/XIAOMI">Xiaomi</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/ONEPLUS">OnePlus</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/REALME">Realme</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/OPPO">Oppo</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/VIVO">Vivo</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/NOKIA">Nokia</a></li>
+
+                                    <!-- Camera Brands -->
+                                    <li><a class="dropdown-item" href="/filter/brand/CANON">Canon</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/NIKON">Nikon</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/SONY">Sony</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/FUJIFILM">Fujifilm</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/PANASONIC">Panasonic</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/OLYMPUS">Olympus</a></li>
+                                    <li><a class="dropdown-item" href="/filter/brand/GO_PRO">Go Pro</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Sort by Price -->
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown">
+                                    Sort by Price
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/sort/price/asc">Low to High</a></li>
+                                    <li><a class="dropdown-item" href="/sort/price/desc">High to Low</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Sorting and Filtering part end-->
+                <!-- Product Grid -->
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4 col-xl-3" th:each="product : ${products}">
+                        <div class="card shadow-sm border-0 h-100 p-2">
+                            <!-- Carousel for Product Images -->
+                            <div id="carousel-${product.id}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active p-3">
+                                        <a th:href="@{'/product/' + ${product.id}}">
+                                            <img th:src="@{'/images/' + ${product.imageUrl}}" class="d-block w-100"
+                                                 alt="Product image">
+                                        </a>
+                                    </div>
+                                    <!-- Add more <div class="carousel-item"> if needed -->
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carousel-${product.id}"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carousel-${product.id}"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </div>
+
+                            <!-- Product Info -->
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fs-6 my-product-name" style="text-align: justify;">
+                                    <a class="text-decoration-none text-dark fw-bold"
+                                       th:href="@{'/product/' + ${product.id}}">
+                                        <span th:text="${product.name}"></span>
+                                    </a>
+                                </h5>
+
+                                <div class="flex-grow-1"></div>
+                                <!-- Pricing -->
+                                <p class="fw-semibold text-center mb-3 mt-5" th:text="${product.price} + '৳'"
+                                   style="color: #D51E0B; font-size: 17px;"></p>
+
+                                <!-- Action Buttons -->
+                                <div class="mt-auto">
+                                    <a th:href="@{'/product/' + ${product.id}}"
+                                       class="btn btn-primary w-100 mb-2 d-flex align-items-center justify-content-center gap-2">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        <span>Buy Now</span>
+                                    </a>
+                                    <a th:href="@{'/product/' + ${product.id}}"
+                                       class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>Add to Cart</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of row -->
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

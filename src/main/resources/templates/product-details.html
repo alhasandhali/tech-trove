@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-1::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Details - TechTrove</title>
+</head>
+<body>
+<section style="margin-top: 65px;" class="container-fluid">
+    <main style="margin-top: 117px;">
+        <div class="content">
+            <div class="container">
+                <div class="container-fluid mt-4">
+                    <!-- Product Details Card -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="row g-0">
+                            <!-- Left Section: Carousel -->
+                            <div class="col-md-6">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img th:src="@{'/images/' + ${product.imageUrl}}" class="d-block w-100"
+                                                 alt="Product image">
+                                        </div>
+                                        <!-- Add more images if needed -->
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Right Section: Product Info -->
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h2 class="fw-bold text-primary" th:text="${product.name}"></h2>
+                                    <p class="text-muted mb-4" th:utext="${product.description}"></p>
+
+                                    <!-- Price, Brand, Category -->
+                                    <div class="mb-3">
+                                        <span class="badge bg-secondary me-2">Price: <span
+                                                th:text="${product.price}"></span>৳</span>
+                                        <span class="badge bg-secondary me-2">Brand: <span
+                                                th:text="${product.brand}"></span></span>
+                                        <span class="badge bg-secondary">Category: <span
+                                                th:text="${product.category}"></span></span>
+                                    </div>
+
+                                    <!-- Action Buttons: Add to Cart and Wishlist -->
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <form th:action="@{'/user/wishlist/add/' + ${product.id}}" method="post">
+<!--                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+                                            <button type="submit" class="btn btn-outline-warning text-dark w-45">
+                                                <i class="fa-regular fa-heart"></i> Wishlist
+                                            </button>
+                                        </form>
+                                        <form th:action="@{'/user/cart/add/' + ${product.id}}" method="post">
+                                            <input type="hidden" name="quantity" id="cartQuantity" value="1"/>
+                                            <button type="submit" class="btn btn-primary w-45">
+                                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <!-- Quantity Selector & Buy Now Button -->
+                                    <form th:action="@{'/user/product/buy/' + ${product.id}}" method="post">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <button type="button" id="minus" class="btn btn-outline-secondary">-
+                                            </button>
+                                            <input type="text" name="buyingQuantity" id="quantity" value="1"
+                                                   class="form-control mx-2 text-center" style="max-width: 60px;">
+                                            <button type="button" id="plus" class="btn btn-outline-secondary">+</button>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100 text-light" th:disabled="${product.quantity <= 0}">Buy Now</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="card-footer text-center">
+                            <span>@techtrove</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const quantityInput = document.getElementById("quantity");
+            const cartInput = document.getElementById("cartQuantity");
+            const plusBtn = document.getElementById("plus");
+            const minusBtn = document.getElementById("minus");
+
+            function updateCartInput() {
+                cartInput.value = quantityInput.value;
+            }
+
+            plusBtn.addEventListener("click", function () {
+                let currentVal = parseInt(quantityInput.value) || 1;
+                quantityInput.value = currentVal + 1;
+                updateCartInput();
+            });
+
+            minusBtn.addEventListener("click", function () {
+                let currentVal = parseInt(quantityInput.value) || 1;
+                quantityInput.value = currentVal > 1 ? currentVal - 1 : 1;
+                updateCartInput();
+            });
+
+            quantityInput.addEventListener("input", updateCartInput); // If user types manually
+        });
+    </script>
+
+</section>
+</body>
+</html>

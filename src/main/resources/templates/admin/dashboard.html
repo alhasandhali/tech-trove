@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{common-2::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="container">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-1"></div>
+                    <!-- Main Content -->
+                    <div class="col-md-10 col-lg-10 p-4">
+                        <h2 class="mb-4">Welcome <i>admin</i>, <span th:text="${user.fullName}"></span></h2>
+
+                        <!-- Profile Card -->
+                        <div class="profile-card mb-4">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <img th:src="@{'/images/' + ${user.imageUrl}}" class="rounded-circle img-fluid"
+                                         alt="Profile"/>
+                                </div>
+                                <div class="col-md-9">
+                                    <h5 th:text="${user.fullName}">Jane Doe</h5>
+                                    <p>Email: <span th:text="${user.email}"></span></p>
+                                    <p>Member since: <span th:text="${createdAt}"></span></p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                       data-bs-target="#exampleModal">Edit Profile</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit profile modal -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Update profile</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/user/process-update-form}" method="post"
+                                              enctype="multipart/form-data">
+                                            <div class="mb-3">
+                                                <img th:src="@{'/images/' + ${user.imageUrl}}"
+                                                     class="rounded-circle img-fluid" alt="Profile"/>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <input th:value="${user.id}" hidden="hidden" name="id"/>
+                                                <label for="fullName" class="form-label">Full Name</label>
+                                                <input th:value="${user.fullName}" type="text" class="form-control"
+                                                       id="fullName" name="fullName" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email address</label>
+                                                <input th:value="${user.email}" type="email" class="form-control"
+                                                       id="email" name="email" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input th:value="${user.password}" type="password" class="form-control"
+                                                       id="password" name="password" required>
+                                                <input type="checkbox"
+                                                       onclick="password.type = this.checked ? 'text' : 'password'">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone</label>
+                                                <input th:value="${user.phone}" type="text" class="form-control"
+                                                       id="phone" name="phone">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input th:value="${user.address}" type="text" class="form-control"
+                                                       id="address" name="address">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="productImage" class="form-label">Profile Image</label>
+                                                <input type="file" class="form-control" id="productImage"
+                                                       name="productImage" accept="image/*">
+                                            </div>
+
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Orders-->
+                        <div class="order-table">
+                            <h5 class="mb-3"><img src="/images/order.png" alt="icon"
+                                                  style="max-height: 30px; width: 30px;"> Orders</h5>
+                            <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#Order ID</th>
+                                        <th>#Product ID</th>
+                                        <th>#User ID</th>
+                                        <th>Quantity</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody th:each="order : ${orders}">
+                                    <!-- First item -->
+                                    <tr>
+                                        <td th:rowspan="${#lists.size(order.items)}" th:text="${order.id}"></td>
+                                        <td th:text="${order.items[0].product.id}"></td>
+                                        <td th:rowspan="${#lists.size(order.items)}" th:text="${order.user.id}"></td>
+                                        <td th:text="${order.items[0].quantity}"></td>
+                                        <td th:rowspan="${#lists.size(order.items)}" th:text="${order.orderDate}"></td>
+                                        <td th:rowspan="${#lists.size(order.items)}">
+                                            <form th:action="@{/admin/update-status}" method="post">
+                                                <input type="hidden" name="orderId" th:value="${order.id}" />
+                                                <select name="status" class="form-select" onchange="this.form.submit()" required>
+                                                    <option th:each="category : ${status}"
+                                                            th:value="${category}"
+                                                            th:text="${category.name()}"
+                                                            th:selected="${category == order.shippingStatus}">
+                                                    </option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td th:rowspan="${#lists.size(order.items)}" th:text="${order.totalAmount}"></td>
+                                        <td th:rowspan="${#lists.size(order.items)}">
+                                            <a th:href="@{'/admin/order-details/' + ${order.id}}" class="btn btn-sm btn-outline-secondary">View</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Remaining items -->
+                                    <tr th:each="item, iterStat : ${order.items}" th:if="${iterStat.index > 0}">
+                                        <td th:text="${item.product.id}"></td>
+                                        <td th:text="${item.quantity}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
